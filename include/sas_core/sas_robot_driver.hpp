@@ -27,6 +27,8 @@
 #   1. Juan Jose Quiroz Omana (juanjose.quirozomana@manchester.ac.uk)
 #      Added the Watchdog functionaly initially proposed in
 #      https://github.com/SmartArmStack/sas_core/pull/1
+#   2. Erwin Lopez (erwin.lopez@manchester.ac.uk)
+#      Added functionality to control tool gpio
 */
 
 /**
@@ -64,6 +66,7 @@ protected:
     std::tuple<VectorXd, VectorXd> joint_limits_;
     VectorXd joint_velocities_;
     VectorXd joint_torques_;
+    std::array<bool, 2> tool_gpio_{};
 
     std::unique_ptr<sas::Clock> clock_;
     std::unique_ptr<std::thread> watchdog_thread_;
@@ -158,6 +161,18 @@ protected:
      * @param joint_limits Tuple of (min_limits, max_limits)
      */
     virtual void set_joint_limits(const std::tuple<VectorXd, VectorXd>& joint_limits);
+
+    /**
+     * @brief Get tool wrist digital pin values
+     * @return Array of boolean values per digital pin
+     */
+    virtual std::array<bool, 2> get_tool_gpio();
+
+    /**
+     * @brief Set tool wrist digital pin values
+     * @param tool_gpio Array of boolean values per digital pin
+     */
+    virtual void set_tool_gpio(const std::array<bool, 2>& tool_gpio);
 
     /**
      * @brief Start the watchdog thread with the given period

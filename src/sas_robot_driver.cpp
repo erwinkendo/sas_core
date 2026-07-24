@@ -25,6 +25,8 @@
 #   1. Juan Jose Quiroz Omana (juanjose.quirozomana@manchester.ac.uk)
 #      Added the Watchdog functionality initially proposed in
 #      https://github.com/SmartArmStack/sas_core/pull/1
+#   2. Erwin Lopez (erwin.lopez@manchester.ac.uk)
+#      Added functionality to control tool gpio
 #*/
 
 /**
@@ -90,6 +92,15 @@ void RobotDriver::set_joint_limits(const std::tuple<VectorXd, VectorXd> &joint_l
     joint_limits_ = joint_limits;
 }
 
+std::array<bool, 2> RobotDriver::get_tool_gpio()
+{
+    return tool_gpio_;
+}
+
+void RobotDriver::set_tool_gpio(const std::array<bool, 2>& tool_gpio)
+{
+    tool_gpio_ = tool_gpio;
+}
 
 /**
  * @brief RobotDriver::_watchdog_thread_function throws an exception if the elapsed time since the last trigger
